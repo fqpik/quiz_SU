@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Молодые науки</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=Caveat:wght@600&display=swap">
+<style>
+:root{--bg:#edf3fb;--g1:rgba(255,120,190,.3);--g2:rgba(80,120,255,.16);--card:#fff;--text:#10213d;--muted:#5a6f8f;--line:rgba(16,33,61,.14);--opt:#f2f7fd;--acc:#a3236b;--accbg:#ff8fc2;--ok:#0f9d4f;--okg:rgba(15,157,79,.4);--bad:#d92d3f;--badg:rgba(217,45,63,.4);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1426;--g1:rgba(255,120,190,.14);--g2:rgba(80,120,255,.3);--card:#112038;--text:#eaf3ff;--muted:#9db4d6;--line:rgba(255,255,255,.14);--opt:#172a4a;--acc:#ff8fc2;--ok:#3df08a;--okg:rgba(61,240,138,.55);--bad:#ff5468;--badg:rgba(255,84,104,.55)}}
+:root[data-theme="dark"]{--bg:#0a1426;--g1:rgba(255,120,190,.14);--g2:rgba(80,120,255,.3);--card:#112038;--text:#eaf3ff;--muted:#9db4d6;--line:rgba(255,255,255,.14);--opt:#172a4a;--acc:#ff8fc2;--ok:#3df08a;--okg:rgba(61,240,138,.55);--bad:#ff5468;--badg:rgba(255,84,104,.55)}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;color:var(--text);font:400 16px/1.45 Rubik,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:radial-gradient(520px 360px at 100% 0,var(--g1),transparent 70%),radial-gradient(560px 420px at 0 100%,var(--g2),transparent 70%),var(--bg);background-attachment:fixed}
+.wrap{max-width:560px;margin:0 auto;padding:22px 18px 40px}
+h1{margin:0;font-size:30px;line-height:1.1;font-weight:700;letter-spacing:-.5px}
+.sub{margin:6px 0 18px;color:var(--muted)}
+.dots{display:flex;gap:6px;margin-bottom:16px}
+.dots i{flex:1;height:6px;border-radius:3px;background:var(--line);transition:background .3s,box-shadow .3s}
+.dots i.cur{background:var(--acc)}
+.dots i.ok{background:var(--ok);box-shadow:0 0 10px var(--okg)}
+.dots i.bad{background:var(--bad);box-shadow:0 0 10px var(--badg)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px 18px;box-shadow:0 18px 50px -26px rgba(5,15,40,.6)}
+.top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.plate{flex:none;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:32px;background:radial-gradient(circle at 35% 30%,var(--opt),var(--line));border:2px solid var(--accbg)}
+.count{margin:0;color:var(--muted);font-size:14px}
+h2{margin:0 0 18px;font-size:23px;line-height:1.25;font-weight:700}
+.opts{display:grid;gap:10px}
+.opts.locked{pointer-events:none}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;font:500 17px/1.3 Rubik,system-ui,sans-serif;color:var(--text);background:var(--opt);border:1.5px solid var(--line);border-radius:14px;padding:13px 14px;cursor:pointer;transition:border-color .2s,box-shadow .3s,background .3s,opacity .3s}
+.opt:hover{border-color:var(--acc)}
+.opt:focus-visible,.btn:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.l{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:14px;background:var(--line)}
+.t{flex:1}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--opt));box-shadow:0 0 0 1px var(--ok),0 0 24px 2px var(--okg),inset 0 0 18px -6px var(--okg);animation:pop .4s}
+.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,var(--opt));box-shadow:0 0 0 1px var(--bad),0 0 24px 2px var(--badg),inset 0 0 18px -6px var(--badg);animation:shake .45s}
+.opt.ok .l{background:var(--ok);color:#06210f}
+.opt.bad .l{background:var(--bad);color:#fff}
+.opt.ok::after{content:"✓";font-weight:700;font-size:20px;color:var(--ok)}
+.opt.bad::after{content:"✕";font-weight:700;font-size:20px;color:var(--bad)}
+.opt.dim{opacity:.45}
+.note{min-height:1.4em;margin:16px 0 0;font:600 22px/1.25 Caveat,"Comic Sans MS",cursive;color:var(--acc)}
+.btn{display:block;width:100%;margin-top:14px;padding:14px;border:0;border-radius:14px;background:var(--accbg);color:#10213d;font:700 17px Rubik,system-ui,sans-serif;cursor:pointer}
+.btn[hidden],[hidden]{display:none}
+.end{text-align:center}
+.score{margin:6px 0 4px;font-size:56px;font-weight:700;line-height:1;letter-spacing:-1px}
+.verdict{margin:0 0 6px;font-size:20px;font-weight:500}
+@keyframes shake{20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+@keyframes pop{0%{transform:scale(.97)}60%{transform:scale(1.015)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Молодые науки</h1>
+  <p class="sub">Кибернетика, ИИ, геномика и другие новые области</p>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+
+  <section class="card" id="quiz">
+    <div class="top"><div class="plate" id="em"></div><p class="count" id="cnt"></p></div>
+    <h2 id="q"></h2>
+    <div class="opts" id="opts"></div>
+    <p class="note" id="note" aria-live="polite"></p>
+    <button class="btn" id="next" hidden>Дальше</button>
+  </section>
+
+  <section class="card end" id="end" hidden>
+    <div class="plate" style="margin:0 auto 10px">🏆</div>
+    <p class="score" id="sc"></p>
+    <p class="verdict" id="verdict"></p>
+    <button class="btn" id="again">Сыграть ещё раз</button>
+  </section>
+</main>
+
+<script>
+const Q=[
+{e:"⚙️",q:"Какая наука изучает управление и связь в живых организмах и машинах?",o:["Бионика","Робототехника","Эргономика","Кибернетика"],a:3,f:"Науку оформил Норберт Винер, выпустив в 1948 году книгу «Кибернетика»."},
+{e:"🤖",q:"Кто предложил термин «искусственный интеллект» для Дартмутского семинара 1956 года?",o:["Алан Тьюринг","Джон Маккарти","Клод Шеннон","Марвин Минский"],a:1,f:"Этот семинар принято считать рождением ИИ как области науки."},
+{e:"🧬",q:"Какая молодая наука изучает геном организма целиком?",o:["Протеомика","Метаболомика","Геномика","Эпигенетика"],a:2,f:"Черновик генома человека опубликовали в 2001 году, полную версию объявили в 2003-м."},
+{e:"🔬",q:"Сколько нанометров в одном метре?",o:["Миллиард","Миллион","Тысяча","Триллион"],a:0,f:"Толщина человеческого волоса — десятки тысяч нанометров."},
+{e:"🌿",q:"Кто ввёл термин «экология»?",o:["Чарльз Дарвин","Александр Гумбольдт","Владимир Вернадский","Эрнст Геккель"],a:3,f:"Геккель предложил это слово в 1866 году."},
+{e:"🧠",q:"Что измеряет функциональная МРТ при изучении мозга?",o:["Электрические импульсы напрямую","Изменения кровотока и насыщения кислородом","Температуру тканей","Плотность костей"],a:1,f:"Активные области мозга потребляют больше кислорода, это и видно на снимке."},
+{e:"💾",q:"Какую абстрактную модель вычислений описал Алан Тьюринг в 1936 году?",o:["Квантовый компьютер","Нейросеть","Машина Тьюринга","Реляционная база"],a:2,f:"Эта модель стала основой теории алгоритмов и современной информатики."},
+{e:"⚛️",q:"Как называется базовая единица информации в квантовом компьютере?",o:["Бит","Байт","Нейрон","Кубит"],a:3,f:"Кубит может находиться в суперпозиции состояний 0 и 1."},
+{e:"🎭",q:"Кто ввёл слово «робот» в мировой язык?",o:["Айзек Азимов","Станислав Лем","Карел Чапек","Жюль Верн"],a:2,f:"Слово прозвучало в пьесе «R.U.R.» 1920 года, придумал его брат писателя Йозеф."},
+{e:"🧫",q:"Какая наука на стыке биологии и информатики анализирует массивы данных о ДНК и белках?",o:["Биометрия","Биоинформатика","Бионика","Биохимия"],a:1,f:"Её инструменты нужны, чтобы читать геномы и искать закономерности в биоданных."}
+];
+const $=id=>document.getElementById(id);
+const dots=$("dots");
+let i=0,score=0,locked=false;
+Q.forEach(()=>dots.appendChild(document.createElement("i")));
+
+function show(){
+  locked=false;
+  const d=Q[i],box=$("opts");
+  $("em").textContent=d.e;
+  $("cnt").textContent="Вопрос "+(i+1)+" из "+Q.length;
+  $("q").textContent=d.q;
+  $("note").textContent="";
+  $("next").hidden=true;
+  $("next").textContent=i===Q.length-1?"Узнать результат":"Дальше";
+  box.className="opts";box.innerHTML="";
+  d.o.forEach((t,k)=>{
+    const b=document.createElement("button");
+    b.className="opt";
+    b.innerHTML='<span class="l">'+"АБВГ"[k]+'</span><span class="t"></span>';
+    b.lastChild.textContent=t;
+    b.onclick=()=>pick(k,b);
+    box.appendChild(b);
+  });
+  [...dots.children].forEach((x,k)=>x.classList.toggle("cur",k===i));
+}
+
+function pick(k,b){
+  if(locked)return;
+  locked=true;
+  const d=Q[i],bs=[...$("opts").children],right=k===d.a;
+  $("opts").classList.add("locked");
+  if(right)score++;else b.classList.add("bad");
+  bs[d.a].classList.add("ok");
+  bs.forEach((x,n)=>{if(n!==k&&n!==d.a)x.classList.add("dim")});
+  dots.children[i].classList.add(right?"ok":"bad");
+  $("note").textContent=(right?"Верно! ":"Мимо. ")+d.f;
+  $("next").hidden=false;
+  $("next").focus({preventScroll:true});
+}
+
+function finish(){
+  $("quiz").hidden=true;$("end").hidden=false;
+  [...dots.children].forEach(x=>x.classList.remove("cur"));
+  $("sc").textContent=score+" из "+Q.length;
+  $("verdict").textContent=score>=9?"Первооткрыватель!":score>=7?"Знаток новых наук":score>=4?"Уверенный новичок":"Время изучить новые науки";
+}
+
+$("next").onclick=()=>{i++;if(i<Q.length){show();window.scrollTo(0,0)}else finish()};
+$("again").onclick=()=>{i=0;score=0;[...dots.children].forEach(x=>x.className="");$("end").hidden=true;$("quiz").hidden=false;show();window.scrollTo(0,0)};
+show();
+</script>
+</body>
+</html>
